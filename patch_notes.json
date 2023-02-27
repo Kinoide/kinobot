@@ -1,0 +1,10 @@
+{
+  "3.0.0": {
+    "majorChanges": [
+      "Convert all commands to slash commands",
+      "Add /version command",
+      "Remove !help and !post"
+    ],
+    "minorChanges": []
+  }
+}

@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "deno kinobot",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "deno",
+            "runtimeArgs": [
+                "run",
+                "--inspect",
+                "--inspect-brk",
+                "--allow-read",
+                "--allow-net",
+                "--allow-env",
+                "-A",
+                "src/start.ts"
+            ],
+            "attachSimplePort": 9229
+        }
+    ]
+}
