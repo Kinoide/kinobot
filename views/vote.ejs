@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html>
-<head>
-	
-	<title>Kinobot</title>
 
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+
+    <title>Kinobot</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
     <script src="https://cdn.rawgit.com/mgalante/jquery.redirect/master/jquery.redirect.js"></script>
-	
+
 </head>
+
 <body>
     <div class="container-fluid">
         <div class="row">
@@ -28,13 +30,15 @@
         <div class="row">
             <div class="card-deck col-sm-12 justify-content-center" id="deck">
                 <% shuffledTitles.forEach(id => { %>
-                    <div class="card" style="max-width:230px; flex:auto">
-                        <img class="card-img-top" src="<%= movies.get(id).image %>">
-                        <div class="card-body text-center">
-                            <a href="<%= movies.get(id).url %>" target="blank"><h4 class="card-title"><%= movies.get(id).title %></h4></a>
-                            <span class="movie-id" style="display: none"><%= movies.get(id).id %></span>
-                        </div>
+                <div class="card" style="max-width:230px; flex:auto">
+                    <img class="card-img-top" src="<%= movies.get(id).image %>">
+                    <div class="card-body text-center">
+                        <a href="<%= movies.get(id).url %>" target="blank">
+                            <h4 class="card-title"><%= movies.get(id).title %></h4>
+                        </a>
+                        <span class="movie-id" style="display: none"><%= movies.get(id).id %></span>
                     </div>
+                </div>
                 <% });%>
             </div>
         </div>
@@ -44,13 +48,17 @@
         </div>
 </body>
 <script>
-    Sortable.create(deck, { /* options */ });
-    $("#submit").click(function() {
+    Sortable.create(deck, {
+        /* options */ });
+    $("#submit").click(function () {
         var list = [];
-        $(".movie-id").each(function() {
+        $(".movie-id").each(function () {
             list.push(this.textContent);
         });
-        $.redirect("/submit/<%= key %>", {list: list});
+        $.redirect("/submit/<%= key %>", {
+            list: list
+        });
     });
 </script>
+
 </html>
