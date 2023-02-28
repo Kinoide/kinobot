@@ -21,7 +21,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build the Docker image
-      run: docker build -t ghcr.io/${{ vars.repository_owner }}/${{ github.repository_name }}:latest .
+      run: docker build -t ghcr.io/${{ vars.REPOSITORY_OWNER }}/${{ vars.REPOSITORY_NAME }}:latest .
 
     - name: Push the Docker image to GitHub Container Registry
-      run: docker push ghcr.io/${{ vars.repository_owner }}/${{ github.repository_name }}:latest
+      run: docker push ghcr.io/${{ vars.REPOSITORY_OWNER }}/${{ vars.REPOSITORY_NAME }}:latest
