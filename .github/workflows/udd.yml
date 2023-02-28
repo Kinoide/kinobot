@@ -1,5 +1,8 @@
 name: udd-update-dependencies
 
+permissions:
+  statuses: write
+
 on:
   workflow_dispatch:
   schedule:
