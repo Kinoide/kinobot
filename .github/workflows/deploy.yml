@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 permissions:
-  repository-projects: write
+  packages: write
 
 jobs:
   build-and-deploy:
