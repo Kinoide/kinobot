@@ -1,4 +1,4 @@
-name: udd-update-dependencies
+name: Update Deno dependencies
 
 permissions:
   statuses: write
