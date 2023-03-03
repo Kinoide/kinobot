@@ -11,6 +11,7 @@ ADD ./src ./src
 RUN deno compile --allow-read --allow-net --allow-env --output kinobot src/start.ts
 
 FROM frolvlad/alpine-glibc:alpine-3.17
+ARG version=dev
 WORKDIR /root/
 # Copy executable
 COPY --from=builder /app/kinobot ./kinobot
@@ -18,5 +19,5 @@ COPY --from=builder /app/kinobot ./kinobot
 ADD ./views ./views
 # Copy patch notes
 COPY ./patch_notes.json ./patch_notes.json
-ENV VERSION="3.0.0"
+ENV VERSION=${version}
 ENTRYPOINT [ "/root/kinobot" ]
