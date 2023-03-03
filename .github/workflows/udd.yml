@@ -2,6 +2,7 @@ name: Update Deno dependencies
 
 permissions:
   statuses: write
+  pull-requests: write
 
 on:
   workflow_dispatch:
