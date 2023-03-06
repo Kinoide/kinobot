@@ -33,7 +33,7 @@ import { SlashHistory } from "./commands/history.ts";
 import { SlashMiskine } from "./commands/miskine.ts";
 import { SlashGenres } from "./commands/genres.ts";
 import { SlashList } from "./commands/list.ts";
-import { GetPatchNotes, SlashVersion } from "./commands/version.ts";
+import { SlashVersion } from "./commands/version.ts";
 
 export interface ISlashCommand {
   info: ApplicationCommandPartial;
@@ -83,9 +83,6 @@ export class Kinobot extends Client {
                 break;
               case "get_vote_link":
                 GetVoteLinkButton(interaction);
-                break;
-              case "get_patch_notes":
-                GetPatchNotes(interaction);
                 break;
             }
             break;
