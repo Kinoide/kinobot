@@ -21,14 +21,20 @@ export async function SlashPropose(interaction: ApplicationCommandInteraction) {
   try {
     // Check current phase
     if (system.currentPhase != Phases.Propositions) {
-      interaction.reply("Les propositions ne sont pas ouvertes.");
+      interaction.reply({
+        content: "Les propositions ne sont pas ouvertes",
+        ephemeral: true,
+      });
       return;
     }
 
     const url: string = await GetTrueUrl(interaction.option<string>("lien"));
     // If url is not a movie
     if (!IsLetterboxdMovieUrl(url)) {
-      interaction.reply("Lien incorrect");
+      interaction.reply({
+        content: "Lien incorrect",
+        ephemeral: true,
+      });
       return;
     }
 
@@ -43,7 +49,10 @@ export async function SlashPropose(interaction: ApplicationCommandInteraction) {
       system.maxPropositions != 0 &&
       kinophile.getNbOfPropositions() >= system.maxPropositions
     ) {
-      interaction.reply("Vous avez suffisament proposé ! :angry:");
+      interaction.reply({
+        content: "Vous avez suffisament proposé ! :angry:",
+        ephemeral: true,
+      });
       return;
     }
 
@@ -51,7 +60,10 @@ export async function SlashPropose(interaction: ApplicationCommandInteraction) {
     const letterboxd = await BuildLetterboxd(url);
     if (letterboxd.id != "") {
       if (system.proposedMovies.has(letterboxd.id)) {
-        interaction.reply("Le film a déjà été proposé.");
+        interaction.reply({
+          content: "Le film a déjà été proposé",
+          ephemeral: true,
+        });
         return;
       }
 
