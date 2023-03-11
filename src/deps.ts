@@ -41,7 +41,7 @@ export {
 /**
  * Web server library (oak)
  */
-export { Application, Router } from "https://deno.land/x/oak@v12.0.0/mod.ts";
+export { Application, Router } from "https://deno.land/x/oak@v12.1.0/mod.ts";
 
 /**
  * Template library (dejs)
@@ -56,12 +56,12 @@ export * as cheerio from "https://esm.sh/cheerio@1.0.0-rc.12";
 /**
  * Dotenv library
  */
-export * as dotenv from "https://deno.land/std@0.178.0/dotenv/mod.ts";
+export * as dotenv from "https://deno.land/std@0.179.0/dotenv/mod.ts";
 
 /**
  * Logging library
  */
-export * as log from "https://deno.land/std@0.178.0/log/mod.ts";
+export * as log from "https://deno.land/std@0.179.0/log/mod.ts";
 
 /**
  * Chart library (quickchart)
