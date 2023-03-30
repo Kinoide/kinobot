@@ -13,6 +13,7 @@ import {
   MessageComponents,
   MessageComponentType,
 } from "../deps.ts";
+import { getText } from "../languageManager.ts";
 
 /**
  * /propose command
@@ -22,17 +23,17 @@ export async function SlashPropose(interaction: ApplicationCommandInteraction) {
     // Check current phase
     if (system.currentPhase != Phases.Propositions) {
       interaction.reply({
-        content: "Les propositions ne sont pas ouvertes",
+        content: getText("propose.notOpen"),
         ephemeral: true,
       });
       return;
     }
 
-    const url: string = await GetTrueUrl(interaction.option<string>("lien"));
+    const url: string = await GetTrueUrl(interaction.option<string>(getText("propose.paramLinkName")));
     // If url is not a movie
     if (!IsLetterboxdMovieUrl(url)) {
       interaction.reply({
-        content: "Lien incorrect",
+        content: getText("propose.incorrectLink"),
         ephemeral: true,
       });
       return;
@@ -50,7 +51,7 @@ export async function SlashPropose(interaction: ApplicationCommandInteraction) {
       kinophile.getNbOfPropositions() >= system.maxPropositions
     ) {
       interaction.reply({
-        content: "Vous avez suffisament proposé ! :angry:",
+        content: getText("propose.limit"),
         ephemeral: true,
       });
       return;
@@ -61,7 +62,7 @@ export async function SlashPropose(interaction: ApplicationCommandInteraction) {
     if (letterboxd.id != "") {
       if (system.proposedMovies.has(letterboxd.id)) {
         interaction.reply({
-          content: "Le film a déjà été proposé",
+          content: getText("propose.alreadyProposed"),
           ephemeral: true,
         });
         return;
@@ -69,11 +70,11 @@ export async function SlashPropose(interaction: ApplicationCommandInteraction) {
 
       await interaction.reply(
         {
-          content: `${interaction.user} a proposé ${url}`,
+          content: getText("propose.proposition", {user: interaction.user.id, movie: url}),
           components: Array<MessageComponentData>({
             type: MessageComponentType.ACTION_ROW,
             components: new MessageComponents().button({
-              label: "Annuler",
+              label: getText("propose.cancel"),
               customID: "cancel_movie",
               style: ButtonStyle.DESTRUCTIVE,
             }),
@@ -102,9 +103,7 @@ export async function SlashPropose(interaction: ApplicationCommandInteraction) {
       kinophile.subscribed = true;
     }
   } catch (error) {
-    interaction.reply(
-      "Une erreur s'est produite. Veuillez contacter l'administrateur.",
-    );
+    interaction.reply(getText("propose.error"));
     console.error(error);
   }
 }

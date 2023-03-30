@@ -34,6 +34,7 @@ import { SlashMiskine } from "./commands/miskine.ts";
 import { SlashGenres } from "./commands/genres.ts";
 import { SlashList } from "./commands/list.ts";
 import { SlashVersion } from "./commands/version.ts";
+import { getText } from "./languageManager.ts";
 
 export interface ISlashCommand {
   info: ApplicationCommandPartial;
@@ -48,7 +49,7 @@ export class Kinobot extends Client {
   @event()
   async ready() {
     console.log(`Ready! User: ${this.user?.tag}`);
-    system.sendMessage("Salutations.");
+    system.sendMessage(getText("greetings"));
 
     await this.interactions.commands.bulkEdit(
       commands,

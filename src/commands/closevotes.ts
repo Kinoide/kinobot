@@ -3,6 +3,7 @@ import { ApplicationCommandInteraction, Embed, QuickChart } from "../deps.ts";
 import { Movie } from "../movie.ts";
 import { GetMiskineWinners } from "./miskine.ts";
 import { GetSessionCode, ReinitialiseMovieCounter } from "../database.ts";
+import { getText } from "../languageManager.ts";
 
 /**
  * /closevotes command
@@ -13,7 +14,7 @@ export async function SlashCloseVotes(
   try {
     // Check current phase
     if (system.currentPhase != Phases.Votes) {
-      interaction.reply("Le vote n'est pas ouvert.");
+      interaction.reply(getText("closevotes.notOpen"));
       return;
     }
 
@@ -73,7 +74,7 @@ export async function SlashCloseVotes(
       data: {
         labels: shortTitles,
         datasets: [{
-          label: "Votes",
+          label: getText("closevotes.votesLabel"),
           data: votes,
           backgroundColor: "#AD1457",
         }],
@@ -82,7 +83,7 @@ export async function SlashCloseVotes(
     // create embed and send it
     const resultEmbed = new Embed()
       .setColor("#AD1457")
-      .setTitle(`Le grand gagnant est ${winner.title} !`)
+      .setTitle(getText("closevotes.text", {movie: winner.title}))
       .setDescription(winner.url)
       .setThumbnail(winner.backdrop)
       .setImage(rankingsChart.getUrl());
@@ -98,9 +99,7 @@ export async function SlashCloseVotes(
 
     system.reset();
   } catch (error) {
-    interaction.reply(
-      "Une erreur s'est produite. Veuillez contacter l'administrateur.",
-    );
+    interaction.reply(getText("closevotes.error"));
     console.error(error);
     return;
   }

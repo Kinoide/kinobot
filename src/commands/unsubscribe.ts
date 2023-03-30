@@ -1,5 +1,6 @@
 import { Phases, system } from "../system.ts";
 import { ApplicationCommandInteraction } from "../deps.ts";
+import { getText } from "../languageManager.ts";
 
 /**
  * /unsubscribe command
@@ -9,7 +10,7 @@ export async function SlashUnsubscribe(
 ) {
   // Check current phase
   if (system.currentPhase == Phases.Idle) {
-    await interaction.reply("Les propositions ne sont pas ouvertes.");
+    await interaction.reply(getText("unsubscribe.notOpen"));
     return;
   }
 
@@ -17,7 +18,7 @@ export async function SlashUnsubscribe(
   if (system.users.has(interaction.user.id)) {
     if (!system.users.get(interaction.user.id)!.subscribed) {
       await interaction.reply({
-        content: "Vous n'ètes pas encore inscrit !",
+        content: getText("unsubscribe.notSubscribed"),
         ephemeral: true,
       });
       return;
@@ -25,13 +26,13 @@ export async function SlashUnsubscribe(
     system.users.get(interaction.user.id)!.subscribed = false;
   }
   interaction.reply({
-    content: `${interaction.user} s'est désinscrit.`,
+    content: getText("unsubscribe.unsubscription", {user: interaction.user.id}),
     allowedMentions: { users: [] },
   });
 
   // Check if every subscriber has voted
   if (system.subscribers().length == 0) {
-    await interaction.send("Il n'y a plus d'inscrits 😥");
+    await interaction.send(getText("unsubscribe.noMoreSubscribers"));
     return;
   }
   if (system.currentPhase == Phases.Votes) {
@@ -43,7 +44,7 @@ export async function SlashUnsubscribe(
       }
     }
     if (allSubscribersHaveVoted) {
-      await interaction.send("Tous les inscrits ont voté!");
+      await interaction.send(getText("unsubscribe.everybodyHasVoted"));
     }
   }
 }

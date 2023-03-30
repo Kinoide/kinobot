@@ -1,5 +1,6 @@
 import { Phases, system } from "../system.ts";
 import { ApplicationCommandInteraction } from "../deps.ts";
+import { getText } from "../languageManager.ts";
 
 /**
  * /countvotes command
@@ -9,11 +10,9 @@ export async function SlashCountVotes(
 ) {
   // Check current phase
   if (system.currentPhase != Phases.Votes) {
-    interaction.reply("Le vote n'est pas ouvert.");
+    interaction.reply(getText("countvotes.notOpen"));
     return;
   }
 
-  await interaction.reply(
-    `Il y a actuellement ${system.votesCount}/${system.subscribers().length} votes.`,
-  );
+  await interaction.reply(getText("countvotes.text", {number: String(system.votesCount), total: String(system.subscribers().length)}));
 }

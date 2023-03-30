@@ -4,6 +4,7 @@ import {
   GetCurrentMiskine,
   GetMiskineRecord,
 } from "../database.ts";
+import { getText } from "../languageManager.ts";
 
 /**
  * /miskine command
@@ -33,7 +34,7 @@ export async function SlashMiskine(interaction: ApplicationCommandInteraction) {
     data: {
       labels: shortTitles,
       datasets: [{
-        label: "Votes",
+        label: getText("miskine.votesLabel"),
         data: counts,
         backgroundColor: "#5714AD",
       }],
@@ -42,7 +43,7 @@ export async function SlashMiskine(interaction: ApplicationCommandInteraction) {
   // create embed and send it
   const miskineEmbed = new Embed()
     .setColor("#5714AD")
-    .setTitle(`Classement des miskines actuels :`)
+    .setTitle(getText("miskine.title"))
     .setImage(miskineChart.getUrl());
   await interaction.reply({
     content: winners,
@@ -56,6 +57,6 @@ export async function SlashMiskine(interaction: ApplicationCommandInteraction) {
 export async function GetMiskineWinners(): Promise<string> {
   const currentMiskine = await GetCurrentMiskine();
   const recordMiskine = await GetMiskineRecord();
-  return `:cry: Miskine actuel : **${currentMiskine.title}** avec ${currentMiskine.count} tentative·s.\n` +
-    `:trophy: Record précédent : **${recordMiskine.title}** avec ${recordMiskine.record} tentative·s.`;
+  return getText("miskine.currentMiskine", {movie: currentMiskine.title, number: String(currentMiskine.count)}) + "\n" +
+    getText("miskine.recordMiskine", {movie: recordMiskine.title, number: String(recordMiskine.record)});
 }

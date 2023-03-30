@@ -14,6 +14,7 @@ import {
   MessageComponents,
   MessageComponentType,
 } from "../deps.ts";
+import { getText } from "../languageManager.ts";
 
 /**
  * /proposelist command
@@ -23,14 +24,14 @@ export async function SlashProposeList(
 ) {
   // Check current phase
   if (system.currentPhase != Phases.Propositions) {
-    interaction.reply("Les propositions ne sont pas ouvertes.");
+    interaction.reply(getText("proposelist.notOpen"));
     return;
   }
 
-  const url: string = await GetTrueUrl(interaction.option<string>("lien"));
+  const url: string = await GetTrueUrl(interaction.option<string>(getText("proposelist.paramLinkName")));
   // If url is not a list
   if (!IsLetterboxdListUrl(url)) {
-    interaction.reply("Lien incorrect");
+    interaction.reply(getText("proposelist.incorrectLink"));
     return;
   }
 
@@ -45,7 +46,7 @@ export async function SlashProposeList(
     system.maxPropositions != 0 &&
     kinophile.getNbOfPropositions() >= system.maxPropositions
   ) {
-    interaction.reply("Vous avez suffisament proposé ! :angry:");
+    interaction.reply(getText("proposelist.limit"));
     return;
   }
 
@@ -55,7 +56,7 @@ export async function SlashProposeList(
   const proposedURLs = system.getProposedMoviesAsURLList();
   movieList = movieList.filter((movie) => !proposedURLs.includes(movie));
   if (movieList.length == 0) {
-    interaction.reply("Tous les films de la liste sont déjà proposés.");
+    interaction.reply(getText("proposelist.allAlreadyProposed"));
     return;
   }
   const picked = movieList[Math.floor(Math.random() * movieList.length)];
@@ -64,18 +65,17 @@ export async function SlashProposeList(
   const letterboxd = await BuildLetterboxd(picked);
   if (letterboxd.id != "") {
     if (system.proposedMovies.has(letterboxd.id)) {
-      interaction.reply("Le film a déjà été proposé.");
+      interaction.reply(getText("proposelist.alreadyProposed"));
       return;
     }
 
     await interaction.reply(
       {
-        content:
-          `${interaction.user} propose un film aléatoire de la liste <${url}>.\nLe film est: ${picked}.`,
+        content: getText("proposelist.proposition", {user: interaction.user.id, url: url, movie: picked}),
         components: Array<MessageComponentData>({
           type: MessageComponentType.ACTION_ROW,
           components: new MessageComponents().button({
-            label: "Annuler",
+            label: getText("proposelist.cancel"),
             customID: "cancel_movie",
             style: ButtonStyle.DESTRUCTIVE,
           }),

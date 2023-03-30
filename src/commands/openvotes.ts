@@ -9,6 +9,7 @@ import {
 } from "../deps.ts";
 import { IncrementMovieCounter } from "../database.ts";
 import { Kinophile } from "../kinophile.ts";
+import { getText } from "../languageManager.ts";
 
 /**
  * /openvotes command
@@ -19,12 +20,12 @@ export async function SlashOpenVotes(
   try {
     // Check current phase
     if (system.currentPhase != Phases.Propositions) {
-      await interaction.reply("Les propositions ne sont pas ouvertes.");
+      await interaction.reply(getText("openvotes.notOpen"));
       return;
     }
 
     if (system.proposedMovies.size == 0) {
-      await interaction.reply("Il n'y a aucun film proposé.");
+      await interaction.reply(getText("openvotes.noMovieProposed"));
       return;
     }
 
@@ -38,13 +39,11 @@ export async function SlashOpenVotes(
     });
     await interaction.reply(
       {
-        content: `<@&${
-          Deno.env.get("ROLE_ID")
-        }> Fermeture des propositions. Les inscrits ont reçu leurs liens par MP. Cliquez sur le bouton pour en avoir un.`,
+        content: getText("openvotes.text", {role: Deno.env.get("ROLE_ID")!}),
         components: Array<MessageComponentData>({
           type: MessageComponentType.ACTION_ROW,
           components: new MessageComponents().button({
-            label: "Obtenir mon lien de vote",
+            label: getText("openvotes.button"),
             customID: "get_vote_link",
             style: ButtonStyle.PRIMARY,
           }),
@@ -56,9 +55,7 @@ export async function SlashOpenVotes(
       IncrementMovieCounter(movie);
     }
   } catch (error) {
-    await interaction.reply(
-      "Une erreur s'est produite. Veuillez contacter l'administrateur.",
-    );
+    await interaction.reply(getText("openvotes.error"));
     console.error(error);
     return;
   }

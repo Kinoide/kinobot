@@ -1,6 +1,7 @@
 import { GetGenres, IsLetterboxdMovieUrl } from "../letterboxd.ts";
 import { ApplicationCommandInteraction, Embed, QuickChart } from "../deps.ts";
 import { GetSeenMovies } from "../database.ts";
+import { getText } from "../languageManager.ts";
 
 /**
  * !genres command
@@ -54,7 +55,7 @@ export async function SlashGenres(interaction: ApplicationCommandInteraction) {
   // Create embed
   const genresEmbed = new Embed()
     .setColor("#57AD14")
-    .setTitle("Genres des films visionnés (en %) :")
+    .setTitle(getText("genres.title"))
     .setImage(genresChart.getUrl());
 
   await interaction.reply({

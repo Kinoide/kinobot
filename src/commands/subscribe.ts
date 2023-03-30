@@ -1,6 +1,7 @@
 import { Phases, system } from "../system.ts";
 import { Kinophile } from "../kinophile.ts";
 import { ApplicationCommandInteraction } from "../deps.ts";
+import { getText } from "../languageManager.ts";
 
 /**
  * /subscribe command
@@ -10,7 +11,7 @@ export async function SlashSubscribe(
 ) {
   // Check current phase
   if (system.currentPhase == Phases.Idle) {
-    await interaction.reply("Les propositions ne sont pas ouvertes.");
+    await interaction.reply(getText("subscribe.notOpen"));
     return;
   }
 
@@ -23,7 +24,7 @@ export async function SlashSubscribe(
   } else {
     if (system.users.get(interaction.user.id)!.subscribed) {
       await interaction.reply({
-        content: "Vous ètes déjà inscrit !",
+        content: getText("subscribe.alreadySubscribed"),
         ephemeral: true,
       });
       return;
@@ -31,7 +32,7 @@ export async function SlashSubscribe(
     system.users.get(interaction.user.id)!.subscribed = true;
   }
   interaction.reply({
-    content: `${interaction.user} s'est inscrit.`,
+    content: getText("subscribe.subscription", {user: interaction.user.id}),
     allowedMentions: { users: [] },
   });
 
