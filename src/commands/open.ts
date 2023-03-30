@@ -24,8 +24,15 @@ export function SlashOpen(interaction: ApplicationCommandInteraction) {
 
   // Display message depending on maxPropositions
   if (system.maxPropositions == 0) {
-    interaction.reply(getText("open.unlimited", {role: Deno.env.get("ROLE_ID")!}));
+    interaction.reply(
+      getText("open.unlimited", { role: Deno.env.get("ROLE_ID")! }),
+    );
   } else {
-    interaction.reply(getText("open.limited", {role: Deno.env.get("ROLE_ID")!, maxPropositions: String(system.maxPropositions)}));
+    interaction.reply(
+      getText("open.limited", {
+        role: Deno.env.get("ROLE_ID")!,
+        maxPropositions: String(system.maxPropositions),
+      }),
+    );
   }
 }

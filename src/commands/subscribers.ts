@@ -26,10 +26,17 @@ export async function SlashSubscribers(
     if (user.subscribed) {
       // Add vote status
       if (system.currentPhase == Phases.Votes) {
-        const status = user.hasVoted ? getText("subscribers.statusVoted") : getText("subscribers.statusNotVoted");
-        str += getText("subscribers.entryVote", {user: user.discordUser.username, status: status});
+        const status = user.hasVoted
+          ? getText("subscribers.statusVoted")
+          : getText("subscribers.statusNotVoted");
+        str += getText("subscribers.entryVote", {
+          user: user.discordUser.username,
+          status: status,
+        });
       } else {
-        str += getText("subscribers.entry", {user: user.discordUser.username});
+        str += getText("subscribers.entry", {
+          user: user.discordUser.username,
+        });
       }
     }
   }

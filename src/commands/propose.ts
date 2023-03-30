@@ -29,7 +29,9 @@ export async function SlashPropose(interaction: ApplicationCommandInteraction) {
       return;
     }
 
-    const url: string = await GetTrueUrl(interaction.option<string>(getText("propose.paramLinkName")));
+    const url: string = await GetTrueUrl(
+      interaction.option<string>(getText("propose.paramLinkName")),
+    );
     // If url is not a movie
     if (!IsLetterboxdMovieUrl(url)) {
       interaction.reply({
@@ -70,7 +72,10 @@ export async function SlashPropose(interaction: ApplicationCommandInteraction) {
 
       await interaction.reply(
         {
-          content: getText("propose.proposition", {user: interaction.user.id, movie: url}),
+          content: getText("propose.proposition", {
+            user: interaction.user.id,
+            movie: url,
+          }),
           components: Array<MessageComponentData>({
             type: MessageComponentType.ACTION_ROW,
             components: new MessageComponents().button({

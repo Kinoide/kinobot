@@ -83,7 +83,7 @@ export async function SlashCloseVotes(
     // create embed and send it
     const resultEmbed = new Embed()
       .setColor("#AD1457")
-      .setTitle(getText("closevotes.text", {movie: winner.title}))
+      .setTitle(getText("closevotes.text", { movie: winner.title }))
       .setDescription(winner.url)
       .setThumbnail(winner.backdrop)
       .setImage(rankingsChart.getUrl());

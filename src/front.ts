@@ -42,7 +42,7 @@ function renderVote(voterId: string): Promise<string> {
         console.log(system.proposedMovies.get(id)?.title);
         console.log(system.proposedMovies.get(id)?.url);
       });
-      
+
       return renderFileToString("views/vote.ejs", {
         movies: system.proposedMovies,
         shuffledTitles: shuffledIds,
@@ -50,7 +50,7 @@ function renderVote(voterId: string): Promise<string> {
         textTitle: getText("front.title"),
         textHeader: getText("front.header"),
         textSubHeader: getText("front.subHeader"),
-        textSubmit: getText("front.submit")
+        textSubmit: getText("front.submit"),
       });
     }
     // if the votes are not open, return error message.
@@ -94,7 +94,7 @@ function handlevote(voterId: string, movies: Array<string>) {
       for (let i = 0; i < nbMovies; i++) {
         const movieId = moviesRanked[i];
         logger.info(`working on movie ${movieId}`);
-        
+
         // check if movie is in proposed movies
         if (system.proposedMovies.has(movieId)) {
           logger.info(`found movie ${movieId} on proposed movies`);
@@ -106,7 +106,7 @@ function handlevote(voterId: string, movies: Array<string>) {
         } else {
           success = false;
           return renderFileToString("views/message.ejs", {
-            message: getText("front.invalidEntry", {movie: moviesRanked[i]}),
+            message: getText("front.invalidEntry", { movie: moviesRanked[i] }),
           });
         }
       }
@@ -123,7 +123,7 @@ function handlevote(voterId: string, movies: Array<string>) {
             movieFromSystem.score += score;
           } else {
             return renderFileToString("views/message.ejs", {
-              message: getText("front.invalidEntry", {movie: movieId}),
+              message: getText("front.invalidEntry", { movie: movieId }),
             });
           }
         });
@@ -142,7 +142,7 @@ function handlevote(voterId: string, movies: Array<string>) {
           }
         } else {
           return renderFileToString("views/message.ejs", {
-            message: getText("front.invalidVoter", {user: voterId}),
+            message: getText("front.invalidVoter", { user: voterId }),
           });
         }
 

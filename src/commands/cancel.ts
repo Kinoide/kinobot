@@ -76,10 +76,13 @@ export async function SlashCancel(interaction: ApplicationCommandInteraction) {
     // Argument has to be movie ID at this point
     if (!system.proposedMovies.has(movieId)) {
       interaction.reply(
-        getText("cancel.movieNotProposed", {user: interaction.user.id, movie: movieId}),
+        getText("cancel.movieNotProposed", {
+          user: interaction.user.id,
+          movie: movieId,
+        }),
         {
           allowedMentions: { users: [] },
-        }
+        },
       );
       return;
     }
@@ -118,7 +121,10 @@ export function CancelMovieFromSelect(
     );
     originalCancel?.deleteResponse();
     (movie?.origin as Interaction).send(
-      getText("cancel.text", {user: interaction.user.id, movie: movie?.title || ""}),
+      getText("cancel.text", {
+        user: interaction.user.id,
+        movie: movie?.title || "",
+      }),
       {
         allowedMentions: { users: [] },
       },
@@ -134,21 +140,26 @@ async function replyToMovieCancel(
   switch (status) {
     case CancelStatus.Cancelled:
       await interaction.reply({
-        content: getText("cancel.text", {user: interaction.user.id, movie: movie?.title || ""}),
+        content: getText("cancel.text", {
+          user: interaction.user.id,
+          movie: movie?.title || "",
+        }),
         allowedMentions: { users: [] },
       });
       break;
     case CancelStatus.NotFound:
       await interaction.reply({
-        content: getText("cancel.movieNotProposed", {user: interaction.user.id, movie: movie?.title || ""}),
+        content: getText("cancel.movieNotProposed", {
+          user: interaction.user.id,
+          movie: movie?.title || "",
+        }),
         allowedMentions: { users: [] },
         ephemeral: true,
       });
       break;
     case CancelStatus.Forbidden:
       await interaction.reply({
-        content:
-          getText("cancel.notAuthorized", {user: interaction.user.id}),
+        content: getText("cancel.notAuthorized", { user: interaction.user.id }),
         allowedMentions: { users: [] },
         ephemeral: true,
       });

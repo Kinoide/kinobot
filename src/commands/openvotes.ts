@@ -39,7 +39,7 @@ export async function SlashOpenVotes(
     });
     await interaction.reply(
       {
-        content: getText("openvotes.text", {role: Deno.env.get("ROLE_ID")!}),
+        content: getText("openvotes.text", { role: Deno.env.get("ROLE_ID")! }),
         components: Array<MessageComponentData>({
           type: MessageComponentType.ACTION_ROW,
           components: new MessageComponents().button({

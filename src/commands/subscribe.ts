@@ -32,7 +32,7 @@ export async function SlashSubscribe(
     system.users.get(interaction.user.id)!.subscribed = true;
   }
   interaction.reply({
-    content: getText("subscribe.subscription", {user: interaction.user.id}),
+    content: getText("subscribe.subscription", { user: interaction.user.id }),
     allowedMentions: { users: [] },
   });
 

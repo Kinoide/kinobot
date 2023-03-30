@@ -14,5 +14,10 @@ export async function SlashCountVotes(
     return;
   }
 
-  await interaction.reply(getText("countvotes.text", {number: String(system.votesCount), total: String(system.subscribers().length)}));
+  await interaction.reply(
+    getText("countvotes.text", {
+      number: String(system.votesCount),
+      total: String(system.subscribers().length),
+    }),
+  );
 }

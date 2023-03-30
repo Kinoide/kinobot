@@ -57,6 +57,12 @@ export async function SlashMiskine(interaction: ApplicationCommandInteraction) {
 export async function GetMiskineWinners(): Promise<string> {
   const currentMiskine = await GetCurrentMiskine();
   const recordMiskine = await GetMiskineRecord();
-  return getText("miskine.currentMiskine", {movie: currentMiskine.title, number: String(currentMiskine.count)}) + "\n" +
-    getText("miskine.recordMiskine", {movie: recordMiskine.title, number: String(recordMiskine.record)});
+  return getText("miskine.currentMiskine", {
+    movie: currentMiskine.title,
+    number: String(currentMiskine.count),
+  }) + "\n" +
+    getText("miskine.recordMiskine", {
+      movie: recordMiskine.title,
+      number: String(recordMiskine.record),
+    });
 }

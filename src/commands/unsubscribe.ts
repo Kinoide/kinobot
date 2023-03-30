@@ -26,7 +26,9 @@ export async function SlashUnsubscribe(
     system.users.get(interaction.user.id)!.subscribed = false;
   }
   interaction.reply({
-    content: getText("unsubscribe.unsubscription", {user: interaction.user.id}),
+    content: getText("unsubscribe.unsubscription", {
+      user: interaction.user.id,
+    }),
     allowedMentions: { users: [] },
   });
 

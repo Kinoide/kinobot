@@ -42,7 +42,11 @@ export async function SlashVersion(interaction: ApplicationCommandInteraction) {
   releaseNote = releaseNote.replaceAll(urlRegex, "<$&>");
 
   await interaction.reply({
-    content: getText("version.text", {version: version, notes: releaseNote, url: htmlURL}),
+    content: getText("version.text", {
+      version: version,
+      notes: releaseNote,
+      url: htmlURL,
+    }),
     ephemeral: true,
   });
 }

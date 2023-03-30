@@ -20,7 +20,11 @@ export async function SlashList(interaction: ApplicationCommandInteraction) {
   // Display proposed movies
   let str = getText("list.header");
   system.proposedMovies.forEach((movie) => {
-    str += getText("list.entry", {movie: movie.title, url: movie.url, user: movie.proposedBy.username});
+    str += getText("list.entry", {
+      movie: movie.title,
+      url: movie.url,
+      user: movie.proposedBy.username,
+    });
   });
   await interaction.reply({ content: str, allowedMentions: { users: [] } });
 }

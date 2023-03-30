@@ -28,7 +28,9 @@ export async function SlashProposeList(
     return;
   }
 
-  const url: string = await GetTrueUrl(interaction.option<string>(getText("proposelist.paramLinkName")));
+  const url: string = await GetTrueUrl(
+    interaction.option<string>(getText("proposelist.paramLinkName")),
+  );
   // If url is not a list
   if (!IsLetterboxdListUrl(url)) {
     interaction.reply(getText("proposelist.incorrectLink"));
@@ -71,7 +73,11 @@ export async function SlashProposeList(
 
     await interaction.reply(
       {
-        content: getText("proposelist.proposition", {user: interaction.user.id, url: url, movie: picked}),
+        content: getText("proposelist.proposition", {
+          user: interaction.user.id,
+          url: url,
+          movie: picked,
+        }),
         components: Array<MessageComponentData>({
           type: MessageComponentType.ACTION_ROW,
           components: new MessageComponents().button({
