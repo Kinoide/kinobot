@@ -1,4 +1,4 @@
-import { assertArrayIncludes } from "https://deno.land/std@0.178.0/testing/asserts.ts";
+import { assertArrayIncludes } from "https://deno.land/std@0.181.0/testing/asserts.ts";
 import { GetGenres } from "./letterboxd.ts";
 
 Deno.test("GetGenres", async () => {
