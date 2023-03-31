@@ -23,7 +23,7 @@ export async function SlashList(interaction: ApplicationCommandInteraction) {
     str += getText("list.entry", {
       movie: movie.title,
       url: movie.url,
-      user: movie.proposedBy.username,
+      user: movie.proposedBy.id,
     });
   });
   await interaction.reply({ content: str, allowedMentions: { users: [] } });

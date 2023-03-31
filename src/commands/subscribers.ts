@@ -30,12 +30,12 @@ export async function SlashSubscribers(
           ? getText("subscribers.statusVoted")
           : getText("subscribers.statusNotVoted");
         str += getText("subscribers.entryVote", {
-          user: user.discordUser.username,
+          user: user.discordUser.id,
           status: status,
         });
       } else {
         str += getText("subscribers.entry", {
-          user: user.discordUser.username,
+          user: user.discordUser.id,
         });
       }
     }

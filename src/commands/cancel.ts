@@ -75,15 +75,13 @@ export async function SlashCancel(interaction: ApplicationCommandInteraction) {
 
     // Argument has to be movie ID at this point
     if (!system.proposedMovies.has(movieId)) {
-      interaction.reply(
-        getText("cancel.movieNotProposed", {
-          user: interaction.user.id,
+      interaction.reply({
+        content: getText("cancel.movieNotProposed", {
           movie: movieId,
         }),
-        {
-          allowedMentions: { users: [] },
-        },
-      );
+        allowedMentions: { users: [] },
+        ephemeral: true,
+      });
       return;
     }
     const [status, movie] = system.cancelMovieFromID(
@@ -120,15 +118,13 @@ export function CancelMovieFromSelect(
       interaction.message?.interaction?.id!,
     );
     originalCancel?.deleteResponse();
-    (movie?.origin as Interaction).send(
-      getText("cancel.text", {
+    (movie?.origin as Interaction).send({
+      content: getText("cancel.text", {
         user: interaction.user.id,
         movie: movie?.title || "",
       }),
-      {
-        allowedMentions: { users: [] },
-      },
-    );
+      allowedMentions: { users: [] },
+    });
   }
 }
 
@@ -159,7 +155,7 @@ async function replyToMovieCancel(
       break;
     case CancelStatus.Forbidden:
       await interaction.reply({
-        content: getText("cancel.notAuthorized", { user: interaction.user.id }),
+        content: getText("cancel.notAuthorized"),
         allowedMentions: { users: [] },
         ephemeral: true,
       });
