@@ -1,4 +1,4 @@
-FROM denoland/deno:alpine-1.31.1 AS builder
+FROM denoland/deno:alpine-1.32.1 AS builder
 # arm64: Use lukechannings/deno:v1.31.1 instead
 WORKDIR /app
 RUN mkdir ./src ./views
