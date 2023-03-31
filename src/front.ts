@@ -1,4 +1,5 @@
 import { Application, renderFileToString, Router } from "./deps.ts";
+import { getText } from "./languageManager.ts";
 import { logger, Phases, Shuffle, system } from "./system.ts";
 
 export const app = new Application();
@@ -23,13 +24,13 @@ function renderVote(voterId: string): Promise<string> {
     // if we did not find one, return error message.
     if (user === undefined) {
       return renderFileToString("views/message.ejs", {
-        message: "Identifiant de vote invalide !",
+        message: getText("front.wrongId"),
       });
 
       // if the user has already voted, return error message.
     } else if (user.hasVoted) {
       return renderFileToString("views/message.ejs", {
-        message: "Vous avez déjà voté !",
+        message: getText("front.alreadyVoted"),
       });
     } else {
       // shuffle titles
@@ -41,16 +42,21 @@ function renderVote(voterId: string): Promise<string> {
         console.log(system.proposedMovies.get(id)?.title);
         console.log(system.proposedMovies.get(id)?.url);
       });
+
       return renderFileToString("views/vote.ejs", {
         movies: system.proposedMovies,
         shuffledTitles: shuffledIds,
         key: voterId,
+        textTitle: getText("front.title"),
+        textHeader: getText("front.header"),
+        textSubHeader: getText("front.subHeader"),
+        textSubmit: getText("front.submit"),
       });
     }
     // if the votes are not open, return error message.
   } else {
     return renderFileToString("views/message.ejs", {
-      message: "Les votes ne sont pas ouverts !",
+      message: getText("front.notOpen"),
     });
   }
 }
@@ -63,13 +69,13 @@ function handlevote(voterId: string, movies: Array<string>) {
     // return early if user not found
     if (user === undefined) {
       return renderFileToString("views/message.ejs", {
-        message: "La clé est erronée !",
+        message: getText("front.wrongId"),
       });
 
       // return early if user has already voted
     } else if (user.hasVoted === true) {
       return renderFileToString("views/message.ejs", {
-        message: "Tu as déjà voté petit malin",
+        message: getText("front.alreadyVoted"),
       });
     } else {
       logger.info(`found user ${user?.discordUser.username}`);
@@ -100,7 +106,7 @@ function handlevote(voterId: string, movies: Array<string>) {
         } else {
           success = false;
           return renderFileToString("views/message.ejs", {
-            message: `Entrée ${moviesRanked[i]} invalide`,
+            message: getText("front.invalidEntry", { movie: moviesRanked[i] }),
           });
         }
       }
@@ -117,7 +123,7 @@ function handlevote(voterId: string, movies: Array<string>) {
             movieFromSystem.score += score;
           } else {
             return renderFileToString("views/message.ejs", {
-              message: `Problème avec le film ${movieId}`,
+              message: getText("front.invalidEntry", { movie: movieId }),
             });
           }
         });
@@ -132,22 +138,22 @@ function handlevote(voterId: string, movies: Array<string>) {
           system.votesCount++;
 
           if (system.votesCount == system.subscribers().length) {
-            system.sendMessage("Tous les inscrits ont voté!");
+            system.sendMessage(getText("front.everybodyHasVoted"));
           }
         } else {
           return renderFileToString("views/message.ejs", {
-            message: `key ${voterId} not found`,
+            message: getText("front.invalidVoter", { user: voterId }),
           });
         }
 
         return renderFileToString("views/message.ejs", {
-          message: "Merci de ton vote! ",
+          message: getText("front.validated"),
         });
       }
     }
   } else {
     return renderFileToString("views/message.ejs", {
-      message: "Les votes ne sont pas ouverts !",
+      message: getText("front.notOpen"),
     });
   }
 }
@@ -174,7 +180,7 @@ router
       context.response.body = await renderFileToString(
         "views/message.ejs",
         {
-          message: "No key :'(",
+          message: getText("front.noKey"),
         },
       );
     }

@@ -1,4 +1,5 @@
 import { ApplicationCommandInteraction } from "../deps.ts";
+import { getText } from "../languageManager.ts";
 
 const ghRepo = "Kinoide/kinobot";
 const urlRegex = new RegExp(
@@ -39,10 +40,13 @@ export async function SlashVersion(interaction: ApplicationCommandInteraction) {
   }
 
   releaseNote = releaseNote.replaceAll(urlRegex, "<$&>");
-  const changes = `${releaseNote}\n\n_Voir les détails: <${htmlURL}>_`;
 
   await interaction.reply({
-    content: `**Version ${version}**\n\n${changes}`,
+    content: getText("version.text", {
+      version: version,
+      notes: releaseNote,
+      url: htmlURL,
+    }),
     ephemeral: true,
   });
 }

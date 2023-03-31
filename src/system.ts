@@ -10,6 +10,7 @@ import {
   MessageReaction,
   User,
 } from "./deps.ts";
+import { getText } from "./languageManager.ts";
 
 // Get variables from .env file
 export const logger = log.getLogger();
@@ -137,7 +138,7 @@ export class System {
       return false;
     }
     this.sendMessage(
-      `${movie.proposedBy} a supprimé ${movie.title}.`,
+      getText("cancel.text", { user: movie.proposedBy.id, movie: movie.title }),
     );
     this.proposedMovies.delete(movie.id);
     this.unsubscribeUserIfNoMovieFromThem(movie.proposedBy.id);
@@ -153,7 +154,10 @@ export class System {
     this.proposedMovies.forEach((movie) => {
       if (movie.origin.id == message.id) {
         this.sendMessage(
-          `${movie.proposedBy} a supprimé ${movie.title}.`,
+          getText("cancel.text", {
+            user: movie.proposedBy.id,
+            movie: movie.title,
+          }),
         );
         this.proposedMovies.delete(movie.id);
         this.unsubscribeUserIfNoMovieFromThem(movie.proposedBy.id);
@@ -179,7 +183,9 @@ export class System {
       kinophile!.subscribed = false;
       this.sendMessage(
         {
-          content: `${kinophile!.discordUser} a été désinscrit !`,
+          content: getText("unsubscribe.unsubscription", {
+            user: kinophile!.discordUser.id,
+          }),
           allowedMentions: { users: [] },
         },
       );

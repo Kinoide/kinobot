@@ -1,14 +1,18 @@
 import { GetSeenMovies, SessionCodeToString } from "../database.ts";
 import { ApplicationCommandInteraction } from "../deps.ts";
+import { getText } from "../languageManager.ts";
 
 /**
  * /history command
  */
 export async function SlashHistory(interaction: ApplicationCommandInteraction) {
   const seenMovies = await GetSeenMovies(true, 30);
-  let str = ":book: Historique des 30 derniers films visionnés :";
+  let str = getText("history.header");
   for (const movie of seenMovies) {
-    str += `\n• ${SessionCodeToString(movie.lastSeen)} : **${movie.title}**`;
+    str += getText("history.entry", {
+      date: SessionCodeToString(movie.lastSeen),
+      movie: movie.title,
+    });
   }
   await interaction.reply(str);
 }

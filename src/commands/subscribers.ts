@@ -1,5 +1,6 @@
 import { Phases, system } from "../system.ts";
 import { ApplicationCommandInteraction } from "../deps.ts";
+import { getText } from "../languageManager.ts";
 
 /**
  * /subscribers command
@@ -9,13 +10,13 @@ export async function SlashSubscribers(
 ) {
   // Check current phase
   if (system.currentPhase == Phases.Idle) {
-    await interaction.reply("Les propositions ne sont pas ouvertes.");
+    await interaction.reply(getText("subscribers.notOpen"));
     return;
   }
 
   // Check user numbers
   if (system.users.size == 0) {
-    await interaction.reply("Personne n'est inscrit");
+    await interaction.reply(getText("subscribers.nobody"));
     return;
   }
 
@@ -25,11 +26,17 @@ export async function SlashSubscribers(
     if (user.subscribed) {
       // Add vote status
       if (system.currentPhase == Phases.Votes) {
-        str += `\n• ${user.discordUser} : ${
-          user.hasVoted ? "A voté" : "En attente du vote"
-        }`;
+        const status = user.hasVoted
+          ? getText("subscribers.statusVoted")
+          : getText("subscribers.statusNotVoted");
+        str += getText("subscribers.entryVote", {
+          user: user.discordUser.id,
+          status: status,
+        });
       } else {
-        str += `\n• ${user.discordUser}`;
+        str += getText("subscribers.entry", {
+          user: user.discordUser.id,
+        });
       }
     }
   }
@@ -37,11 +44,11 @@ export async function SlashSubscribers(
   // Display message depending on if there are some subscribers in the user list
   if (str.length > 0) {
     interaction.reply({
-      content: "**Inscrits :**" + str,
+      content: getText("subscribers.header") + str,
       allowedMentions: { users: [] },
     });
   } else {
-    await interaction.reply("Personne n'est inscrit 😥");
+    await interaction.reply(getText("subscribers.nobody"));
   }
   return;
 }

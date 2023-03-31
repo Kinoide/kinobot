@@ -14,6 +14,7 @@ import {
   SelectComponentOption,
 } from "../deps.ts";
 import { Movie } from "../movie.ts";
+import { getText } from "../languageManager.ts";
 
 /**
  * /cancel command
@@ -22,11 +23,11 @@ export async function SlashCancel(interaction: ApplicationCommandInteraction) {
   try {
     // Check current phase
     if (system.currentPhase != Phases.Propositions) {
-      interaction.reply("Les propositions ne sont pas ouvertes.");
+      interaction.reply(getText("cancel.notOpen"));
       return;
     }
     // Check number of arguments
-    let movieId = interaction.option<string>("lien");
+    let movieId = interaction.option<string>(getText("cancel.paramLinkName"));
     // If no link is given, display the select
     if (movieId === undefined) {
       // Build select list
@@ -37,12 +38,12 @@ export async function SlashCancel(interaction: ApplicationCommandInteraction) {
         }
       }
       if (select_options.length == 0) {
-        interaction.reply("Vous n'avez proposé aucun film pour le moment.");
+        interaction.reply(getText("cancel.noProposition"));
         return;
       }
       // Display select to user
       interaction = await interaction.reply({
-        content: `Sélectionner le film à annuler:`,
+        content: getText("cancel.movieSelection"),
         ephemeral: true,
         components: Array<MessageComponentData>({
           type: MessageComponentType.ACTION_ROW,
@@ -62,7 +63,7 @@ export async function SlashCancel(interaction: ApplicationCommandInteraction) {
       // If url is not from letterboxd
       if (!IsLetterboxdMovieUrl(url)) {
         interaction.reply(
-          "Pour annuler le film : `/cancel <lien letterboxd>`",
+          getText("cancel.wrongUrl"),
         );
         return;
       }
@@ -74,9 +75,13 @@ export async function SlashCancel(interaction: ApplicationCommandInteraction) {
 
     // Argument has to be movie ID at this point
     if (!system.proposedMovies.has(movieId)) {
-      interaction.reply(
-        `${movieId} : Le film n'a pas été proposé.`,
-      );
+      interaction.reply({
+        content: getText("cancel.movieNotProposed", {
+          movie: movieId,
+        }),
+        allowedMentions: { users: [] },
+        ephemeral: true,
+      });
       return;
     }
     const [status, movie] = system.cancelMovieFromID(
@@ -85,9 +90,7 @@ export async function SlashCancel(interaction: ApplicationCommandInteraction) {
     );
     replyToMovieCancel(interaction, status, movie);
   } catch (error) {
-    interaction.reply(
-      "Une erreur s'est produite. Veuillez contacter l'administrateur.",
-    );
+    interaction.reply(getText("cancel.error"));
     console.error(error);
     return;
   }
@@ -115,12 +118,13 @@ export function CancelMovieFromSelect(
       interaction.message?.interaction?.id!,
     );
     originalCancel?.deleteResponse();
-    (movie?.origin as Interaction).send(
-      `${interaction.user} a annulé **_${movie?.title}_**.`,
-      {
-        allowedMentions: { users: [] },
-      },
-    );
+    (movie?.origin as Interaction).send({
+      content: getText("cancel.text", {
+        user: interaction.user.id,
+        movie: movie?.title || "",
+      }),
+      allowedMentions: { users: [] },
+    });
   }
 }
 
@@ -132,21 +136,26 @@ async function replyToMovieCancel(
   switch (status) {
     case CancelStatus.Cancelled:
       await interaction.reply({
-        content: `${interaction.user} a annulé **_${movie?.title}_**.`,
+        content: getText("cancel.text", {
+          user: interaction.user.id,
+          movie: movie?.title || "",
+        }),
         allowedMentions: { users: [] },
       });
       break;
     case CancelStatus.NotFound:
       await interaction.reply({
-        content: `${interaction.user} : Le film n'a pas été proposé.`,
+        content: getText("cancel.movieNotProposed", {
+          user: interaction.user.id,
+          movie: movie?.title || "",
+        }),
         allowedMentions: { users: [] },
         ephemeral: true,
       });
       break;
     case CancelStatus.Forbidden:
       await interaction.reply({
-        content:
-          `${interaction.user} : Vous n'avez pas les droits de supprimer le film d'un autre`,
+        content: getText("cancel.notAuthorized"),
         allowedMentions: { users: [] },
         ephemeral: true,
       });

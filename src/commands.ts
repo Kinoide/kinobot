@@ -2,20 +2,20 @@ import {
   ApplicationCommandOptionType,
   ApplicationCommandPartial,
 } from "./deps.ts";
+import { getText } from "./languageManager.ts";
 
 export const commands: ApplicationCommandPartial[] = [
   {
     name: "version",
-    description: "Affiche le numéro de version de Kinobot.",
+    description: getText("version.desc"),
   },
   {
     name: "open",
-    description: "Ouvre les propositions de film (2 max par personne).",
+    description: getText("open.desc"),
     options: [
       {
-        name: "nombre",
-        description:
-          "Change le nombre de propositions max par personne (0 = infini)",
+        name: getText("open.paramNumberName"),
+        description: getText("open.paramNumberDesc"),
         required: false,
         type: ApplicationCommandOptionType.NUMBER,
       },
@@ -23,11 +23,11 @@ export const commands: ApplicationCommandPartial[] = [
   },
   {
     name: "propose",
-    description: "Propose un film avec un lien Letterboxd.",
+    description: getText("propose.desc"),
     options: [
       {
-        name: "lien",
-        description: "Lien Letterboxd du film",
+        name: getText("propose.paramLinkName"),
+        description: getText("propose.paramLinkDesc"),
         required: true,
         type: ApplicationCommandOptionType.STRING,
       },
@@ -35,11 +35,11 @@ export const commands: ApplicationCommandPartial[] = [
   },
   {
     name: "proposelist",
-    description: "Propose un film aléatoirement depuis une liste Letterboxd.",
+    description: getText("proposelist.desc"),
     options: [
       {
-        name: "lien",
-        description: "Lien Letterboxd de la liste",
+        name: getText("proposelist.paramLinkName"),
+        description: getText("proposelist.paramLinkDesc"),
         required: true,
         type: ApplicationCommandOptionType.STRING,
       },
@@ -47,12 +47,11 @@ export const commands: ApplicationCommandPartial[] = [
   },
   {
     name: "cancel",
-    description: "Annule un film proposé.",
+    description: getText("cancel.desc"),
     options: [
       {
-        name: "lien",
-        description:
-          "Lien (ex: https://letterboxd.com/film/dune-2021/) ou ID (ex: dune-2021) du film proposé",
+        name: getText("cancel.paramLinkName"),
+        description: getText("cancel.paramLinkDesc"),
         required: false,
         type: ApplicationCommandOptionType.STRING,
       },
@@ -60,49 +59,46 @@ export const commands: ApplicationCommandPartial[] = [
   },
   {
     name: "list",
-    description:
-      "Affiche la liste des films proposés dans la session en cours.",
+    description: getText("list.desc"),
   },
   {
     name: "subscribe",
-    description: "Inscrit à la séance en cours.",
+    description: getText("subscribe.desc"),
   },
   {
     name: "unsubscribe",
-    description: "Désinscrit de la séance en cours.",
+    description: getText("unsubscribe.desc"),
   },
   {
     name: "subscribers",
-    description: "Liste les personnes inscrites.",
+    description: getText("subscribers.desc"),
   },
   {
     name: "openvotes",
-    description: "Clôt les propositions et ouvre les votes.",
+    description: getText("openvotes.desc"),
   },
   {
     name: "countvotes",
-    description: "Affiche le nombre de personnes ayant voté.",
+    description: getText("countvotes.desc"),
   },
   {
     name: "closevotes",
-    description: "Clôt les votes et annonce le film gagnant.",
+    description: getText("closevotes.desc"),
   },
   {
     name: "quit",
-    description: "Annule la session en cours.",
+    description: getText("quit.desc"),
   },
   {
     name: "history",
-    description: "Affiche l'historique des films visionnés.",
+    description: getText("history.desc"),
   },
   {
     name: "miskine",
-    description:
-      "Affiche les film les plus proposés sans qu'ils n'aient été sélectionnés.",
+    description: getText("miskine.desc"),
   },
   {
     name: "genres",
-    description:
-      "Affiche un camembert représentant les genres les plus visionnés.",
+    description: getText("genres.desc"),
   },
 ];
