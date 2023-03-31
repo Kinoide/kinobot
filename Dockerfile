@@ -1,7 +1,7 @@
 FROM denoland/deno:alpine-1.32.1 AS builder
 # arm64: Use lukechannings/deno:v1.31.1 instead
 WORKDIR /app
-RUN mkdir ./src ./views
+RUN mkdir ./src
 # Cache deps
 COPY ./src/deps.ts ./src/deps.ts
 RUN deno cache ./src/deps.ts
@@ -17,5 +17,6 @@ WORKDIR /root/
 COPY --from=builder /app/kinobot ./kinobot
 # Copy views
 ADD ./views ./views
+ADD ./locales ./locales
 ENV VERSION=${version}
 ENTRYPOINT [ "/root/kinobot" ]
