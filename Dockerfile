@@ -1,6 +1,9 @@
 FROM denoland/deno:alpine-1.41.2 AS builder
 # arm64: Use lukechannings/deno:v1.31.1 instead
 WORKDIR /app
+
+COPY ./deno.json ./deno.json
+
 RUN mkdir ./src
 # Cache deps
 COPY ./src/deps.ts ./src/deps.ts
