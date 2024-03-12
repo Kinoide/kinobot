@@ -19,7 +19,7 @@ export {
   MessageReaction,
   slash,
   User,
-} from "https://deno.land/x/harmony@v2.8.0/mod.ts";
+} from "https://deno.land/x/harmony@v2.9.0/mod.ts";
 export type {
   AllMessageOptions,
   ApplicationCommandPartial,
@@ -27,7 +27,7 @@ export type {
   InteractionMessageComponentData,
   MessageComponentData,
   SelectComponentOption,
-} from "https://deno.land/x/harmony@v2.8.0/mod.ts";
+} from "https://deno.land/x/harmony@v2.9.0/mod.ts";
 
 /**
  * MongoDB library (mongo)
@@ -36,12 +36,12 @@ export {
   Collection,
   Database,
   MongoClient,
-} from "https://deno.land/x/mongo@v0.31.2/mod.ts";
+} from "https://deno.land/x/mongo@v0.32.0/mod.ts";
 
 /**
  * Web server library (oak)
  */
-export { Application, Router } from "https://deno.land/x/oak@v12.1.0/mod.ts";
+export { Application, Router } from "https://deno.land/x/oak@14.2.0/mod.ts";
 
 /**
  * Template library (dejs)
@@ -56,12 +56,12 @@ export * as cheerio from "https://esm.sh/cheerio@1.0.0-rc.12";
 /**
  * Dotenv library
  */
-export * as dotenv from "https://deno.land/std@0.181.0/dotenv/mod.ts";
+export * as dotenv from "https://deno.land/std@0.219.1/dotenv/mod.ts";
 
 /**
  * Logging library
  */
-export * as log from "https://deno.land/std@0.181.0/log/mod.ts";
+export * as log from "https://deno.land/std@0.219.1/log/mod.ts";
 
 /**
  * Chart library (quickchart)

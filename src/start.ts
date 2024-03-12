@@ -1,4 +1,4 @@
-import "https://deno.land/std@0.181.0/dotenv/load.ts";
+import "https://deno.land/std@0.219.1/dotenv/load.ts";
 import { app } from "./front.ts";
 import { system } from "./system.ts";
 import { GatewayIntents } from "./deps.ts";
