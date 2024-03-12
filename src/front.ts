@@ -167,8 +167,8 @@ router
   })
   .post("/submit/:key", async (context) => {
     if (typeof context.params.key === "string") {
-      const body = context.request.body();
-      const movies = await (body.value);
+      const body = context.request.body;
+      const movies = await (body.form());
       const movieArray = [];
       for (const [_, value] of movies.entries()) {
         logger.info(`pushing movie ${value} into movieArray`);
