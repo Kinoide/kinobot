@@ -36,7 +36,7 @@ export {
   Collection,
   Database,
   MongoClient,
-} from "https://deno.land/x/mongo@v0.32.0/mod.ts";
+} from "https://deno.land/x/mongo@v0.33.0/mod.ts";
 
 /**
  * Web server library (oak)
@@ -56,12 +56,12 @@ export * as cheerio from "https://esm.sh/cheerio@1.0.0-rc.12";
 /**
  * Dotenv library
  */
-export * as dotenv from "https://deno.land/std@0.219.1/dotenv/mod.ts";
+export * as dotenv from "https://deno.land/std@0.221.0/dotenv/mod.ts";
 
 /**
  * Logging library
  */
-export * as log from "https://deno.land/std@0.219.1/log/mod.ts";
+export * as log from "https://deno.land/std@0.221.0/log/mod.ts";
 
 /**
  * Chart library (quickchart)
